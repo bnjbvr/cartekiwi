@@ -1,0 +1,6 @@
+module.exports = {
+    consumer_key: 'AAA',
+    consumer_secret: 'BBB',
+    access_token_key: 'CCC',
+    access_token_secret: 'DDD'
+}

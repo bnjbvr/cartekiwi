@@ -1,0 +1,23 @@
+{
+  "name": "cartekiwi",
+  "version": "1.0.0",
+  "description": "Mais si, c'est possible, avec la carte kiwi.",
+  "main": "index.js",
+  "dependencies": {
+    "twitter": "^1.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bnjbvr/cartekiwi.git"
+  },
+  "author": "Benjamin Bouvier <public+npm@benj.me> (https://benj.me)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bnjbvr/cartekiwi/issues"
+  },
+  "homepage": "https://github.com/bnjbvr/cartekiwi#readme"
+}
