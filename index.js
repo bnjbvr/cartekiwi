@@ -45,6 +45,11 @@ stream.on('data', function(tweet) {
         return;
     }
 
+    if (tweet.text.toLowerCase().indexOf("c'est pas possible") === -1) {
+        console.log('ABORT: false positive.');
+        return;
+    }
+
     if (blocked) {
         console.log('ABORT: debouncing.');
         return;
