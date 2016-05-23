@@ -4,6 +4,12 @@ var config = require('./config');
 
 var client = new Twitter(config);
 
+var blocked = false;
+
+var SECONDS = 1000;
+var MINUTES = 60 * SECONDS;
+var DEBOUNCING_THRESHOLD = 5 * MINUTES;
+
 function sendTweetTo(handle, statusId) {
     if (handle.charAt(0) !== '@') {
         return;
@@ -20,6 +26,11 @@ function sendTweetTo(handle, statusId) {
             return;
         }
         console.log('Tweet sent to ' + handle + ' at ', (new Date()).toLocaleString());
+
+        blocked = true;
+        setTimeout(function() {
+            blocked = false;
+        }, DEBOUNCING_THRESHOLD);
     });
 }
 
@@ -30,7 +41,12 @@ stream.on('data', function(tweet) {
     var handle = '@' + tweet.user.screen_name;
 
     if (tweet.text.indexOf('RT ') === 0) {
-        console.log('RETWEET');
+        console.log('ABORT: retweet.');
+        return;
+    }
+
+    if (blocked) {
+        console.log('ABORT: debouncing.');
         return;
     }
 
