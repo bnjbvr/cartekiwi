@@ -4,12 +4,15 @@ var config = require('./config');
 
 var client = new Twitter(config);
 
-function sendTweetTo(handle) {
+function sendTweetTo(handle, statusId) {
     if (handle.charAt(0) !== '@') {
         return;
     }
 
-    var tweet = { status: handle + " Mais si, c'est possible ! https://carte.kiwi/" };
+    var tweet = {
+        status: handle + " Mais si, c'est possible ! https://carte.kiwi/",
+        in_reply_to_status_id: statusId
+    };
 
     client.post('statuses/update', tweet, function(err, tweet, response) {
         if (err) {
@@ -25,7 +28,14 @@ var stream = client.stream('statuses/filter', {track: "c'est pas possible"});
 stream.on('data', function(tweet) {
     console.log(tweet.user.screen_name + ': ' + tweet.text);
     var handle = '@' + tweet.user.screen_name;
-    sendTweetTo(handle);
+
+    if (tweet.text.indexOf('RT ') === 0) {
+        console.log('RETWEET');
+        return;
+    }
+
+    var tweetId = tweet.id_str;
+    sendTweetTo(handle, tweetId);
 });
 
 stream.on('error', function(err) {
